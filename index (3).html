@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Archives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080d;
+    --panel: #0d1018;
+    --panel-2: #121623;
+    --ink: #f5f7fb;
+    --muted: #8b93a7;
+    --line: #232838;
+    --blue: #1762f0;
+    --blue-soft: rgba(23, 98, 240, .24);
+    --display: "Archivo", "Arial Black", "Segoe UI Black", "Helvetica Neue", Arial, sans-serif;
+    --text: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color-scheme: dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background:
+      repeating-linear-gradient(90deg, transparent 0, transparent calc(12.5% - 1px), rgba(255,255,255,.035) calc(12.5% - 1px), rgba(255,255,255,.035) 12.5%),
+      var(--bg);
+    color: var(--ink);
+    font: 18px/1.55 var(--text);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 80px; }
+
+  /* top pill */
+  .brand { display: flex; justify-content: center; margin-bottom: 64px; }
+  .brand-pill {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 16px 30px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255,255,255,.02);
+  }
+  .brand-pill svg { width: 44px; height: 44px; }
+  .brand-pill span { font: 800 1.7rem/1 var(--display); font-stretch: 112%; letter-spacing: .02em; }
+
+  /* hero */
+  h1 {
+    margin: 0;
+    text-align: center;
+    font: 900 clamp(2.5rem, 8.4vw, 6.6rem)/.92 var(--display);
+    font-stretch: 112%;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+  }
+  h1 .blue { color: var(--blue); }
+
+  .circles { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 30px 0 32px; }
+  .circle {
+    width: clamp(46px, 7vw, 84px); height: clamp(46px, 7vw, 84px);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: clamp(.62rem, 1.1vw, .86rem); font-weight: 800; color: #fff; letter-spacing: .02em;
+    border: 3px solid var(--panel-2);
+  }
+  .circle.doc { background: #2b6cb0; } .circle.ppt { background: #d4672a; }
+  .circle.xls { background: #2f8a57; } .circle.pdf { background: #c23b3b; }
+  .circle.img { background: #7a4fc0; } .circle.zip { background: #8a6d1d; }
+  .circle svg { width: 58%; height: 58%; display: block; }
+  .circle.folder { background: var(--panel-2); }
+  .circle.folder svg { width: 68%; height: 68%; }
+  .circle.you { background: var(--panel); color: var(--ink); font-weight: 600; border-color: #2a2f40; }
+
+  .sub { text-align: center; margin: 0 auto; max-width: 60ch; }
+  .sub .soft { color: var(--muted); font-size: 1.2rem; margin: 0 0 6px; }
+  .sub .strong { color: var(--ink); font-weight: 600; font-size: 1.2rem; margin: 0; }
+
+  /* pill form */
+  .form {
+    display: flex; align-items: center; gap: 10px;
+    width: min(100%, 520px);
+    margin: 44px auto 18px;
+    padding: 9px;
+    border: 1.5px solid #e6e9f2;
+    border-radius: 14px;
+    background: rgba(255,255,255,.015);
+  }
+  .form input[type="search"] {
+    flex: 1; min-width: 0;
+    background: transparent; border: 0; outline: 0;
+    color: var(--ink); font: inherit; padding: 12px 14px;
+  }
+  .form input::placeholder { color: var(--muted); }
+  .form:focus-within { border-color: var(--blue); }
+  button, a.btn {
+    font: inherit; font-weight: 600; font-size: 1rem;
+    border-radius: 10px; border: 0;
+    padding: 13px 22px; cursor: pointer;
+    background: var(--blue); color: #fff;
+    text-decoration: none; display: inline-block;
+  }
+  button:hover { filter: brightness(1.12); }
+  button:focus-visible, a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .form button { margin-left: auto; }
+
+  .toggles { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .toggles button {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--line); padding: 8px 18px; border-radius: 999px; font-weight: 500; font-size: .95rem;
+  }
+  .toggles button[aria-pressed="true"] { background: var(--panel-2); color: var(--ink); border-color: #3a4260; }
+  .toggles a { color: var(--muted); text-decoration: underline; padding: 8px 10px; font-size: .95rem; }
+  .toggles a:hover { color: var(--ink); }
+
+  .star { display: flex; justify-content: center; margin: 26px 0 30px; color: #3a4057; }
+  .star svg { width: 70px; height: 70px; }
+
+  /* file panel */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  @keyframes flash { 0%, 55% { background: var(--blue-soft); } 100% { background: transparent; } }
+  .ext {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: grid; place-items: center;
+    font-size: .8rem; font-weight: 800; color: #fff; letter-spacing: .02em;
+  }
+  .ext.doc { background: #2b6cb0; }
+  .ext.ppt { background: #d4672a; }
+  .ext.xls { background: #2f8a57; }
+  .ext.pdf { background: #c23b3b; }
+  .ext.img { background: #7a4fc0; }
+  .ext.zip { background: #8a6d1d; }
+  .ext.other { background: #4a5266; }
+  .ext.folder { background: transparent; }
+  .ext svg { display: block; width: 58%; height: 58%; }
+  .ext.folder svg { width: 100%; height: 100%; }
+  .tag { flex: none; font-size: .78rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--blue); color: #fff; }
+  .empty { padding: 56px 22px; text-align: center; color: var(--muted); }
+
+  ul.files { list-style: none; margin: 0; padding: 0; }
+  ul.files li {
+    display: grid; grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 18px; align-items: center;
+    padding: 16px 22px; border-bottom: 1px solid var(--line);
+  }
+  ul.files li:last-child { border-bottom: 0; }
+  ul.files li.flash { animation: flash 3.2s ease-out; }
+  .name { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .name a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 1.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .name a:hover { color: #7da5ff; text-decoration: underline; }
+  .meta { color: var(--muted); font-size: .95rem; text-align: right; white-space: nowrap; }
+  .meta span { display: block; }
+  @media (max-width: 620px) {
+    ul.files li { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; padding: 14px 16px; }
+    .meta { grid-column: 2; text-align: left; }
+    .meta span { display: inline; margin-right: 10px; }
+    .brand { margin-bottom: 40px; }
+    .brand-pill span { font-size: 1.3rem; }
+  }
+
+  ul.tiles {
+    list-style: none; margin: 0; padding: 22px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px;
+  }
+  a.card {
+    position: relative; display: flex; flex-direction: column; height: 100%;
+    border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    background: var(--panel-2); color: inherit; text-decoration: none;
+  }
+  a.card:hover { border-color: var(--blue); }
+  a.card.flash { animation: flash 3.2s ease-out; }
+  .tile { height: 150px; display: grid; place-items: center; background: #0a0d15; }
+  .tile .ext { width: 88px; height: 88px; border-radius: 22px; font-size: 1.15rem; }
+  .tile .ext.folder { width: 112px; height: 112px; }
+  .card-body { padding: 12px 14px 16px; }
+  .card-name {
+    font-weight: 600; font-size: 1rem; line-height: 1.3;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; word-break: break-word;
+  }
+  .card-meta { margin-top: 4px; color: var(--muted); font-size: .88rem; }
+  a.card .tag { position: absolute; top: 10px; right: 10px; }
+
+  .embed iframe { display: block; width: 100%; height: 82vh; min-height: 600px; border: 0; background: #fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    ul.files li.flash, a.card.flash { animation: none; background: var(--blue-soft); }
+  }
+  .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 0 0 14px; font-size: .98rem; }
+  .crumbs button { background: transparent; color: var(--muted); border: 0; padding: 6px 10px; border-radius: 8px; font-weight: 500; }
+  .crumbs button:hover { color: var(--ink); background: var(--panel-2); filter: none; }
+  .crumbs .here { color: var(--ink); font-weight: 700; padding: 6px 10px; }
+  .crumbs .sep { color: var(--muted); }
+  .status { margin-top: 14px; font-size: .95rem; color: var(--muted); text-align: center; }
+  .help { margin: 14px auto 0; font-size: .95rem; color: var(--muted); max-width: 72ch; text-align: center; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-pill" role="img" aria-label="Folder">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M6 16a4 4 0 0 1 4-4h15l6 6h23a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="#ffffff"/>
+        <path d="M6 26a4 4 0 0 1 4-4h44a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="#1762f0"/>
+      </svg>
+    </div>
+  </div>
+
+  <h1>Every file in<br><span class="blue">one place</span></h1>
+
+  <div class="circles" aria-hidden="true">
+    <div class="circle doc" data-icon="doc"></div>
+    <div class="circle ppt" data-icon="ppt"></div>
+    <div class="circle xls" data-icon="xls"></div>
+    <div class="circle pdf" data-icon="pdf"></div>
+    <div class="circle img" data-icon="img"></div>
+    <div class="circle zip" data-icon="zip"></div>
+    <div class="circle folder" data-icon="folder"></div>
+    <div class="circle you">Yours?</div>
+  </div>
+
+  <div class="sub">
+    <p class="soft" id="lede">The archive of our class files, straight from the shared Drive folder.</p>
+    <p class="strong">Add a file in Drive. It shows up here.</p>
+  </div>
+
+  <div class="form">
+    <input type="search" id="q" placeholder="Search files" aria-label="Search files" hidden>
+    <button id="refresh">Refresh now</button>
+  </div>
+
+  <div class="toggles">
+    <button id="listBtn" aria-pressed="true">List view</button>
+    <button id="gridBtn" aria-pressed="false">Grid view</button>
+    <a id="open" target="_blank" rel="noopener">Open in Google Drive</a>
+    <span id="extra"></span>
+  </div>
+
+  <div class="star" aria-hidden="true">
+    <svg viewBox="0 0 64 64" fill="currentColor"><path d="M32 2c1.6 15 6.4 27.4 30 30-23.6 2.6-28.4 15-30 30-1.6-15-6.4-27.4-30-30C25.6 29.4 30.4 17 32 2z"/></svg>
+  </div>
+
+  <nav class="crumbs" id="crumbs" aria-label="Folder path" hidden></nav>
+  <div class="panel" id="panel"></div>
+  <div class="status" id="status" role="status"></div>
+  <p class="help" id="help"></p>
+</div>
+
+<script>
+(function () {
+  // 1) Your folder.
+  var FOLDER_ID = "1zURMLiDGKuOUp9Cg6b4UGE7vhOwTSnTG";
+
+  // 2) Paste your Apps Script web app link between the quotes to switch on the
+  //    custom look. Leave it empty to show Google's own folder view instead.
+  var FEED_URL = "";
+
+  var REFRESH_SECONDS = 60;
+
+  var FOLDER_SVG =
+    '<svg viewBox="0 0 64 64" aria-hidden="true">' +
+    '<path d="M6 16a4 4 0 0 1 4-4h15l6 6h23a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="#e0a41f"/>' +
+    '<path d="M6 26a4 4 0 0 1 4-4h44a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="#f7c948"/>' +
+    '</svg>';
+
+
+  // Simple icons drawn for this page (white shapes on a colored tile).
+  var G = 'fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"';
+  var ICONS = {
+    doc: '<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="#fff"><rect x="14" y="14" width="36" height="5" rx="2.5"/><rect x="14" y="25" width="36" height="5" rx="2.5"/><rect x="14" y="36" width="36" height="5" rx="2.5"/><rect x="14" y="47" width="22" height="5" rx="2.5"/></g></svg>',
+    ppt: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="12" width="44" height="30" rx="5" ' + G + '/><g fill="#fff"><rect x="19" y="29" width="6" height="8" rx="1.5"/><rect x="29" y="22" width="6" height="15" rx="1.5"/><rect x="39" y="26" width="6" height="11" rx="1.5"/></g><path d="M32 42v10M23 54h18" ' + G + '/></svg>',
+    xls: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="12" width="40" height="40" rx="5" ' + G + '/><path d="M12 25.5h40M12 38.5h40M25.5 12v40" ' + G + ' stroke-width="3.5"/></svg>',
+    pdf: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 10h19l11 11v30a3 3 0 0 1-3 3H18a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z" ' + G + '/><path d="M37 10v11h11" ' + G + '/><path d="M22 36h20M22 44h12" ' + G + ' stroke-width="3.5"/></svg>',
+    img: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="12" width="44" height="40" rx="6" ' + G + '/><circle cx="24" cy="25" r="4.5" fill="#fff"/><path d="M12 47l13-13 9 9 7-7 11 11" ' + G + '/></svg>',
+    zip: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="15" y="10" width="34" height="44" rx="6" ' + G + '/><path d="M32 10v20" ' + G + '/><path d="M27 17h10M27 24h10" ' + G + ' stroke-width="3"/><rect x="26" y="34" width="12" height="11" rx="3.5" fill="#fff"/></svg>',
+    other: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 10h19l11 11v30a3 3 0 0 1-3 3H18a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z" ' + G + '/><path d="M37 10v11h11" ' + G + '/></svg>'
+  };
+  function typeOf(name) {
+    var i = name.lastIndexOf(".");
+    var x = i > -1 ? name.slice(i + 1).toLowerCase() : "";
+    if (x === "docx" || x === "doc" || x === "txt" || x === "rtf") return "doc";
+    if (x === "pptx" || x === "ppt") return "ppt";
+    if (x === "xlsx" || x === "xls" || x === "csv") return "xls";
+    if (x === "pdf") return "pdf";
+    if (x === "png" || x === "jpg" || x === "jpeg" || x === "webp" || x === "gif") return "img";
+    if (x === "zip" || x === "rar" || x === "7z") return "zip";
+    return "other";
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".circle[data-icon]"), function (c) {
+    var k = c.getAttribute("data-icon");
+    c.innerHTML = k === "folder" ? FOLDER_SVG : ICONS[k];
+  });
+
+  var panel = document.getElementById("panel");
+  var statusEl = document.getElementById("status");
+  var helpEl = document.getElementById("help");
+  var qEl = document.getElementById("q");
+  var listBtn = document.getElementById("listBtn");
+  var gridBtn = document.getElementById("gridBtn");
+  var left = REFRESH_SECONDS;
+  var view = "list";
+  var files = [];
+  var flags = {};
+  var firstLoad = true;
+  var trail = [{ id: "", name: "All files" }];
+  var crumbsEl = document.getElementById("crumbs");
+  function current() { return trail[trail.length - 1]; }
+  function feedUrlFor(id) {
+    if (!id) return FEED_URL;
+    return FEED_URL + (FEED_URL.indexOf("?") > -1 ? "&" : "?") + "folder=" + encodeURIComponent(id);
+  }
+  var custom = !!FEED_URL;
+
+  var openLink = document.getElementById("open");
+  function drawCrumbs() {
+    openLink.href = "https://drive.google.com/drive/folders/" + (current().id || FOLDER_ID);
+    crumbsEl.textContent = "";
+    if (!custom || trail.length < 2) { crumbsEl.hidden = true; return; }
+    crumbsEl.hidden = false;
+    trail.forEach(function (t, i) {
+      if (i > 0) { var sep = document.createElement("span"); sep.className = "sep"; sep.textContent = "/"; crumbsEl.appendChild(sep); }
+      if (i === trail.length - 1) {
+        var here = document.createElement("span"); here.className = "here"; here.textContent = t.name; crumbsEl.appendChild(here);
+      } else {
+        var b = document.createElement("button");
+        b.textContent = t.name;
+        b.addEventListener("click", function () { goTo(i); });
+        crumbsEl.appendChild(b);
+      }
+    });
+  }
+  function resetView() { files = []; flags = {}; firstLoad = true; qEl.value = ""; drawCrumbs(); loadFeed(); }
+  function openFolder(f) { trail.push({ id: f.id, name: f.name }); resetView(); }
+  function goTo(i) { trail = trail.slice(0, i + 1); resetView(); }
+  function wire(a, f) {
+    if (!(f.folder && custom)) return;
+    a.addEventListener("click", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button === 1) return;
+      ev.preventDefault();
+      openFolder(f);
+    });
+  }
+
+  function extOf(n) { var i = n.lastIndexOf("."); return i > -1 ? n.slice(i + 1).toLowerCase() : ""; }
+  function ago(ts) {
+    var s = Math.round((Date.now() - ts) / 1000);
+    if (s < 60) return "just now";
+    var m = Math.round(s / 60);
+    if (m < 60) return m + (m === 1 ? " minute ago" : " minutes ago");
+    var h = Math.round(m / 60);
+    if (h < 24) return h + (h === 1 ? " hour ago" : " hours ago");
+    var d = Math.round(h / 24);
+    if (d < 30) return d + (d === 1 ? " day ago" : " days ago");
+    return new Date(ts).toLocaleDateString();
+  }
+  function size(b) {
+    if (!b && b !== 0) return "";
+    if (b < 1024) return b + " B";
+    if (b < 1048576) return Math.round(b / 1024) + " KB";
+    return (b / 1048576).toFixed(1) + " MB";
+  }
+
+  /* ---------- embed mode ---------- */
+  function loadEmbed() {
+    panel.className = "panel embed";
+    panel.textContent = "";
+    var f = document.createElement("iframe");
+    f.title = "Files in the Google Drive folder";
+    f.src = "https://drive.google.com/embeddedfolderview?id=" + FOLDER_ID + "#" + view;
+    panel.appendChild(f);
+    left = REFRESH_SECONDS;
+  }
+
+  /* ---------- custom mode ---------- */
+  function makeBadge(f) {
+    var b = document.createElement("div");
+    if (f.folder) { b.className = "ext folder"; b.innerHTML = FOLDER_SVG; return b; }
+    var t = typeOf(f.name);
+    b.className = "ext " + t;
+    b.innerHTML = ICONS[t];
+    return b;
+  }
+
+  function sortedList() {
+    var q = qEl.value.trim().toLowerCase();
+    return files.slice()
+      .sort(function (a, b) {
+        if (!!a.folder !== !!b.folder) return a.folder ? -1 : 1;
+        return b.updated - a.updated;
+      })
+      .filter(function (f) { return !q || f.name.toLowerCase().indexOf(q) > -1; });
+  }
+
+  function renderList(list) {
+    var ul = document.createElement("ul");
+    ul.className = "files";
+    list.forEach(function (f) {
+      var li = document.createElement("li");
+      if (flags[f.id]) li.className = "flash";
+      var nm = document.createElement("div");
+      nm.className = "name";
+      var a = document.createElement("a");
+      a.href = f.url; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = f.name;
+      wire(a, f);
+      nm.appendChild(a);
+      if (flags[f.id]) {
+        var t = document.createElement("span");
+        t.className = "tag"; t.textContent = flags[f.id];
+        nm.appendChild(t);
+      }
+      var meta = document.createElement("div");
+      meta.className = "meta";
+      var s1 = document.createElement("span");
+      s1.textContent = (f.folder ? "Folder, updated " : "Updated ") + ago(f.updated);
+      meta.appendChild(s1);
+      if (!f.folder && (f.size || f.size === 0)) {
+        var s2 = document.createElement("span"); s2.textContent = size(f.size); meta.appendChild(s2);
+      }
+      li.append(makeBadge(f), nm, meta);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function renderGrid(list) {
+    var ul = document.createElement("ul");
+    ul.className = "tiles";
+    list.forEach(function (f) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.className = "card" + (flags[f.id] ? " flash" : "");
+      a.href = f.url; a.target = "_blank"; a.rel = "noopener";
+      wire(a, f);
+      var tile = document.createElement("div");
+      tile.className = "tile";
+      tile.appendChild(makeBadge(f));
+      var body = document.createElement("div");
+      body.className = "card-body";
+      var nm = document.createElement("div");
+      nm.className = "card-name"; nm.textContent = f.name; nm.title = f.name;
+      var meta = document.createElement("div");
+      meta.className = "card-meta";
+      meta.textContent = f.folder ? "Folder" : (size(f.size) || "File");
+      body.append(nm, meta);
+      a.append(tile, body);
+      if (flags[f.id]) {
+        var t = document.createElement("span");
+        t.className = "tag"; t.textContent = flags[f.id];
+        a.appendChild(t);
+      }
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  function render() {
+    var list = sortedList();
+    panel.className = "panel";
+    panel.textContent = "";
+    if (!list.length) {
+      var e = document.createElement("div");
+      e.className = "empty";
+      e.textContent = qEl.value.trim() ? "No files match your search." : "This folder is empty.";
+      panel.appendChild(e);
+      return;
+    }
+    panel.appendChild(view === "grid" ? renderGrid(list) : renderList(list));
+  }
+
+  function loadFeed() {
+    left = REFRESH_SECONDS;
+    fetch(feedUrlFor(current().id), { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("bad status"); return r.json(); })
+      .then(function (data) {
+        var old = {};
+        files.forEach(function (f) { old[f.id] = f; });
+        flags = {};
+        if (!firstLoad) {
+          data.forEach(function (f) {
+            if (!old[f.id]) flags[f.id] = "New";
+            else if (old[f.id].name !== f.name) flags[f.id] = "Renamed";
+          });
+        }
+        files = data;
+        firstLoad = false;
+        render();
+      })
+      .catch(function () {
+        panel.className = "panel";
+        panel.textContent = "";
+        var d = document.createElement("div");
+        d.className = "empty";
+        d.textContent = "Could not load the folder. Check that the web app link is correct and its access is set to Anyone.";
+        panel.appendChild(d);
+      });
+  }
+
+  function reload() { custom ? loadFeed() : loadEmbed(); }
+
+  /* ---------- wiring ---------- */
+  function setView(v) {
+    view = v;
+    listBtn.setAttribute("aria-pressed", v === "list");
+    gridBtn.setAttribute("aria-pressed", v === "grid");
+    custom ? render() : loadEmbed();
+  }
+  listBtn.addEventListener("click", function () { setView("list"); });
+  gridBtn.addEventListener("click", function () { setView("grid"); });
+
+  if (custom) {
+    qEl.hidden = false;
+    qEl.addEventListener("input", render);
+    helpEl.textContent = "Search works on file names. A tag marks files that are new or renamed since the page last checked.";
+  } else {
+    helpEl.textContent = "Showing Google's own folder view. If you see a sign-in page or access denied, set the folder's sharing to \"Anyone with the link can view\".";
+  }
+  document.getElementById("refresh").addEventListener("click", reload);
+
+  setInterval(function () {
+    left -= 1;
+    if (left <= 0) reload();
+    statusEl.textContent = "Refreshes automatically in " + left + " seconds.";
+  }, 1000);
+
+  drawCrumbs();
+  reload();
+})();
+</script>
+</body>
+</html>
